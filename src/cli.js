@@ -1,6 +1,5 @@
 import arg from 'arg';
 import inquirer from 'inquirer';
-import {packages} from "./packages";
 import {createProject} from "./main";
 
 async function getConfig(rawArgs) {
