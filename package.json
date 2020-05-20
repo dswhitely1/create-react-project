@@ -1,0 +1,32 @@
+{
+  "name": "@dswhitely1/create-react-project",
+  "version": "1.0.0",
+  "description": "Project Generation for React",
+  "main": "src/index.js",
+  "bin": {
+    "@dswhitely1/create-react-project": "bin/create-react-project",
+    "create-react-project": "bin/create-react-project"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "create-react-project"
+  ],
+  "author": "Donald Whitely <dswhitely1@gmail.com> (https://www.donwhitely.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "arg": "^4.1.3",
+    "chalk": "^4.0.0",
+    "esm": "^3.2.25",
+    "execa": "^4.0.1",
+    "inquirer": "^7.1.0",
+    "listr": "^0.14.3",
+    "ncp": "^2.0.0",
+    "pkg-install": "^1.0.0"
+  }
+}
