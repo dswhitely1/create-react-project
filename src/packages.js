@@ -12,7 +12,10 @@ const devPackages = {
     typescript: ['typescript'],
     reactTypes: ['@types/react', '@types/node', '@types/react-dom'],
     reduxTypes: ['@types/redux-logger', '@types/redux-devtools-extension', '@types/react-redux'],
-    reactRouterTypes: ['@types/react-router-dom']
+    reactRouterTypes: ['@types/react-router-dom'],
+    commitizen: ['commitizen', 'cz-conventional-changelog'],
+    reactAppRewired: ['react-app-rewired', 'customize-cra'],
+    eslint: ['eslint', 'eslint-config-prettier', 'eslint-plugin-prettier', 'prettier', 'lint-staged']
 }
 
 const packageListGenerator = (pkgMgr, flags, packages, options) => {
@@ -29,7 +32,7 @@ const packageListGenerator = (pkgMgr, flags, packages, options) => {
     }))
 }
 
-const taskListGenerator = (title, tasks, enable) => ({
+export const taskListGenerator = (title, tasks, enable) => ({
     title,
     enabled: () => enable,
     task: () => new Listr(tasks)
@@ -58,9 +61,12 @@ export const packageList = options => {
     const reactTypeScriptTask = taskListGenerator('Types for React', packageList['reactTypes'], true)
     const reduxTypeScriptTask = taskListGenerator('Types for Redux', packageList['reduxTypes'], options.redux)
     const reactRouterTypesTask = taskListGenerator('Types for Reaact Router', packageList['reactRouterTypes'], true)
+    const commitizenTasks = taskListGenerator('Commitizen', packageList['commitizen'], true)
+    const reactAppRewiredTasks = taskListGenerator('React App Rewired', packageList['reactAppRewired'], true)
+    const eslintTasks = taskListGenerator('Eslint with Prettier', packageList['eslint'], true)
     const typescriptTask = taskListGenerator('TypeScript', [typeScriptSubTask, reactTypeScriptTask, reactRouterTypesTask, reduxTypeScriptTask], options.typescript)
 
-    const allPackages = [reactTask, reactRouterTask, reduxTask, typescriptTask]
+    const allPackages = [reactTask, reactRouterTask, reduxTask, commitizenTasks, reactAppRewiredTasks, eslintTasks, typescriptTask]
 
     return taskListGenerator('Package Install', allPackages, true)
 
