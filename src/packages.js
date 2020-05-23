@@ -4,6 +4,7 @@ import Listr from 'listr';
 const packages = {
     react: ['react', 'react-dom', 'react-scripts'],
     reactRouter: ['react-router-dom'],
+    testing: ['@testing-library/jest-dom','@testing-library/react', 'testing-library/user-event' ],
     reduxDependencies: ['redux', 'react-redux']
 }
 
@@ -13,9 +14,9 @@ const devPackages = {
     reactTypes: ['@types/react', '@types/node', '@types/react-dom'],
     reduxTypes: ['@types/redux-logger', '@types/redux-devtools-extension', '@types/react-redux'],
     reactRouterTypes: ['@types/react-router-dom'],
-    commitizen: ['commitizen', 'cz-conventional-changelog'],
-    reactAppRewired: ['react-app-rewired', 'customize-cra'],
-    eslint: ['eslint', 'eslint-config-prettier', 'eslint-plugin-prettier', 'prettier', 'lint-staged']
+    gitTools: ['husky', 'lint-staged'],
+    eslint: ['eslint-config-prettier', 'eslint-plugin-prettier', 'prettier'],
+    testingTypes: ['@types/jest']
 }
 
 const packageListGenerator = (pkgMgr, flags, packages, options) => {
@@ -53,20 +54,20 @@ export const packageList = options => {
     })
 
     const reactTask = taskListGenerator('React', packageList['react'], true)
-    const reactRouterTask = taskListGenerator('React Router', packageList['reactRouter'], true)
+    const reactRouterTask = taskListGenerator('React Router', packageList['reactRouter'], options.reactRouter)
     const reduxDepTask = taskListGenerator('Redux Dependencies', packageList['reduxDependencies'], options.redux)
     const reduxDevDepTask = taskListGenerator('Redux Development Dependencies', packageList['reduxDevDependencies'], options.redux)
     const reduxTask = taskListGenerator('Redux', [reduxDepTask, reduxDevDepTask], options.redux)
     const typeScriptSubTask = taskListGenerator('TypeScript', packageList['typescript'], options.typescript)
     const reactTypeScriptTask = taskListGenerator('Types for React', packageList['reactTypes'], true)
     const reduxTypeScriptTask = taskListGenerator('Types for Redux', packageList['reduxTypes'], options.redux)
-    const reactRouterTypesTask = taskListGenerator('Types for Reaact Router', packageList['reactRouterTypes'], true)
-    const commitizenTasks = taskListGenerator('Commitizen', packageList['commitizen'], true)
-    const reactAppRewiredTasks = taskListGenerator('React App Rewired', packageList['reactAppRewired'], true)
+    const reactRouterTypesTask = taskListGenerator('Types for React Router', packageList['reactRouterTypes'], options.reactRouter)
+    const gitToolsTasks = taskListGenerator('Commit Tools', packageList['gitTools'], true)
     const eslintTasks = taskListGenerator('Eslint with Prettier', packageList['eslint'], true)
-    const typescriptTask = taskListGenerator('TypeScript', [typeScriptSubTask, reactTypeScriptTask, reactRouterTypesTask, reduxTypeScriptTask], options.typescript)
-
-    const allPackages = [reactTask, reactRouterTask, reduxTask, commitizenTasks, reactAppRewiredTasks, eslintTasks, typescriptTask]
+    const testingTypescriptTask = taskListGenerator('Types for Jest', packageList['testingTypes'], true)
+    const typescriptTask = taskListGenerator('TypeScript', [typeScriptSubTask, reactTypeScriptTask, testingTypescriptTask, reactRouterTypesTask, reduxTypeScriptTask], options.typescript)
+    const testingTasks = taskListGenerator("Testing", packageList['testing'], true)
+    const allPackages = [reactTask, testingTasks, reactRouterTask, reduxTask, gitToolsTasks, eslintTasks, typescriptTask]
 
     return taskListGenerator('Package Install', allPackages, true)
 

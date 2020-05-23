@@ -6,13 +6,12 @@ async function getConfig(rawArgs) {
     const args = arg({
         '--typescript': Boolean,
         '--git': Boolean,
-        '--redux': Boolean,
         '-ts': '--typescript',
         '-g': '--git'
     }, {
         argv: rawArgs.slice(2)
     })
-
+    console.log(args);
     const options = {
         directory: args._[0],
         typescript: args['--typescript'] || false,
@@ -65,6 +64,15 @@ async function getConfig(rawArgs) {
         })
     }
 
+    if (!options.reactRouter) {
+        questions.push({
+            name: 'reactRouter',
+            type: 'confirm',
+            message: 'Enable React Router',
+            default: false
+        })
+    }
+
     const answers = await inquirer.prompt(questions);
 
     return {
@@ -72,7 +80,8 @@ async function getConfig(rawArgs) {
         directory: options.directory || answers.directory,
         typescript: options.typescript || answers.typescript,
         git: options.git || answers.git,
-        redux: options.redux || answers.redux
+        redux: options.redux || answers.redux,
+        reactRouter: options.reactRouter || answers.reactRouter
     }
 }
 

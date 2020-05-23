@@ -6,23 +6,27 @@ import Listr from 'listr'
 
 function addToPackageJson(options) {
     const scripts = {
-        start: "react-app-rewired start",
-        build: "react-app-rewired build",
-        test: "react-app-rewired test --env=jsdom",
+        start: "react-scripts start",
+        build: "react-scripts build",
+        test: "react-scripts test",
         eject: "react-scripts eject",
-        commit: "git-cz",
-        precommit: 'lint-staged'
-    }
-
-    const config = {
-        commitizen: {
-            path: "./node_modules/cz-conventional-changelog"
-        }
     }
 
     const lintStaged = {
-        "*.{js,ts,tsx}": [
-            "eslint --fix"
+        "*.+(js|jsx|tsx)": ["eslint --fix"],
+        "*.+(json|css|md)": ["prettier --write"]
+    }
+
+    const browserslist = {
+        production: [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        development: [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
         ]
     }
 
@@ -38,7 +42,7 @@ function addToPackageJson(options) {
         console.log('file not found')
     }
 
-    const newData = {...data, scripts, config, 'lint-staged': lintStaged}
+    const newData = {...data, scripts, browserslist, 'lint-staged': lintStaged}
     const newJSONData = JSON.stringify(newData, null, 2)
     fs.writeFileSync(filename, newJSONData)
 }
