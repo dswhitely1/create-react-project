@@ -16,7 +16,7 @@
 ## Usage
 
 ```sh
-npx create-react-project $name
+npx @dswhitely1/create-react-project
 ```
 
 ## Author

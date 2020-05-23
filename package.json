@@ -1,6 +1,6 @@
 {
   "name": "@dswhitely1/create-react-project",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Project Generation for React",
   "main": "src/index.js",
   "bin": {
