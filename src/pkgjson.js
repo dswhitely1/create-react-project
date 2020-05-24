@@ -64,6 +64,6 @@ export const npmSetup = options => {
         task: async () => addToPackageJson(options)
     }
 
-    return taskListGenerator('Intializing Project', [npmInit, packageJson], true)
+    return taskListGenerator('Initializing Project', [npmInit, packageJson], true)
 
 }

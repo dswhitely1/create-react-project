@@ -17,7 +17,6 @@ const packages = {
 export const gitSetup = options => {
     const gitTasks = Object.keys(packages).map(pkg => {
         const {title, command, flags} = packages[pkg]
-        console.log([title, command, flags])
         return {
             title,
             task: async () => {

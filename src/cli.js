@@ -11,7 +11,6 @@ async function getConfig(rawArgs) {
     }, {
         argv: rawArgs.slice(2)
     })
-    console.log(args);
     const options = {
         directory: args._[0],
         typescript: args['--typescript'] || false,
